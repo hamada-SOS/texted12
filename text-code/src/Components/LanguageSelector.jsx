@@ -8,20 +8,31 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { LANGUAGES_VERSIONS } from "../constants";
+import { color } from "framer-motion";
 
-const LanguageSelector = () => {
+const ACTIVE_COLOR = "blue.400";
+const LanguageSelector = ({ language, onSelect }) => {
   const Languages = Object.entries(LANGUAGES_VERSIONS);
   return (
-    <Box>
+    <Box ml={2} mb={4}>
       <Text mb={2} fontSize="large">
         Select Language:
       </Text>
-      <Menu>
-        <MenuButton as={Button}>Javascript</MenuButton>
-        <MenuList>
-          {Languages.map(([Language, version]) => (
-            <MenuItem key={Language}>
-              {Language}
+      <Menu isLazy>
+        <MenuButton as={Button}>{language}</MenuButton>
+        <MenuList bg={"#110c1b"}>
+          {Languages.map(([lang, version]) => (
+            <MenuItem
+              key={lang}
+              color={lang === language ? ACTIVE_COLOR : ""}
+              bg={lang === language ? "gary.900" : ""}
+              _hover={{
+                color: ACTIVE_COLOR,
+                bg: "gray.900",
+              }}
+              onClick={() => onSelect(lang)}
+            >
+              {lang}
               &nbsp;
               <Text as="span" fontSize="sm" color="gray.500">
                 {version}
